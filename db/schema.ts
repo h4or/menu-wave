@@ -11,6 +11,7 @@ import { sql } from "drizzle-orm";
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
+  plan: text("plan").default("free"),
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
@@ -37,7 +38,7 @@ export const accounts = pgTable(
     compoundKey: primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  }),
+  })
 );
 
 export const sessions = pgTable("session", {
@@ -57,7 +58,7 @@ export const verificationTokens = pgTable(
   },
   (vt) => ({
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
-  }),
+  })
 );
 
 export const menu = pgTable("menu", {
@@ -68,7 +69,7 @@ export const menu = pgTable("menu", {
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  status: text("status").notNull().default("draft"),
+  status: text("status").default("draft"),
   name: text("name").notNull(),
   description: text("description"),
   type: text("type").notNull(),

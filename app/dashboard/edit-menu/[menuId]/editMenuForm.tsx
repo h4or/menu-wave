@@ -14,7 +14,8 @@ import {
   FormMessage,
 } from "@/components/form";
 import { Button, Input } from "@nextui-org/react";
-import { createMenuAction } from "./actions";
+import { editMenuAction } from "./actions";
+import { Menu } from "@/db/schema";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -27,26 +28,31 @@ const formSchema = z.object({
   address: z.string().min(2, {
     message: "Address must be at least 2 characters.",
   }),
-  phone: z.string(),
-  email: z.string(),
+  phone: z.string().optional(),
+  email: z.string().optional(),
+  status: z
+    .string()
+    .refine((value) => value === "draft" || value === "active", {
+      message: "Status must be either 'draft' or 'active'.",
+    }),
 });
 
-export function CreateMenuForm() {
+export function EditMenuForm({ menu }: { menu: Menu }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      description: "",
-      type: "",
-      address: "",
-      phone: "",
-      email: "",
+      name: menu.name,
+      description: menu.description || undefined,
+      type: menu.type,
+      address: menu.address,
+      phone: menu.phone || undefined,
+      email: menu.email || undefined,
+      status: menu.status || "draft",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const updatedValues = { ...values, status: "draft" };
-    await createMenuAction(updatedValues);
+    await editMenuAction({ ...values, id: menu.id, userId: menu.userId });
   }
   return (
     <Form {...form}>
@@ -151,6 +157,19 @@ export function CreateMenuForm() {
                     <Input {...field} />
                   </FormControl>
                   <FormDescription>This is your public email.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="status"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Status</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

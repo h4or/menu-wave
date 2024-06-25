@@ -2,10 +2,15 @@ import MenuListComponent from "@/components/dashboard/menuList";
 import NewMenuButton from "@/components/dashboard/newMenuButton";
 import { title } from "@/components/primitives";
 import { getUserMenus } from "@/data-access/menus";
+import { getCurrentUser } from "@/data-access/users";
+import { calculateUserLimits } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
 
 export default async function DashboardPage() {
   const menus = await getUserMenus();
+  const user = await getCurrentUser();
+  const menus_count = menus.length;
+  const userMenuLimit = calculateUserLimits("menus", user?.plan as string);
   return (
     <div>
       <h1 className={title({ size: "sm" })}>Dashboard</h1>
@@ -15,7 +20,9 @@ export default async function DashboardPage() {
           <div className="flex flex-row items-center gap-4 pt-2">
             <NewMenuButton />
             <Divider orientation="vertical" />
-            <p className="text-gray-400">You have 5 menus left</p>
+            <p className="text-gray-400">
+              You have {userMenuLimit - menus_count} menus left
+            </p>
           </div>
         </div>
       </div>
