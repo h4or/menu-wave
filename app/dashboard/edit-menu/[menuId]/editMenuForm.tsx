@@ -57,13 +57,18 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { phone, email, ...restValues } = values;
+
     await editMenuAction({
-      ...values,
+      ...restValues,
+      phone: phone || null,
+      email: email || null,
       status: menuStatus ? "active" : "draft",
       id: menu.id,
       userId: menu.userId,
     });
   }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
