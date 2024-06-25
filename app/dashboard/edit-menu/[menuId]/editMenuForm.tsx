@@ -13,9 +13,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/form";
-import { Button, Input } from "@nextui-org/react";
+import { Button, Input, Switch } from "@nextui-org/react";
 import { editMenuAction } from "./actions";
 import { Menu } from "@/db/schema";
+import { useState } from "react";
+import { PrivateIcon } from "@/components/icons";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -38,6 +40,9 @@ const formSchema = z.object({
 });
 
 export function EditMenuForm({ menu }: { menu: Menu }) {
+  const [menuStatus, setMenuStatus] = useState(
+    menu.status === "active" ? true : false
+  );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +57,12 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await editMenuAction({ ...values, id: menu.id, userId: menu.userId });
+    await editMenuAction({
+      ...values,
+      status: menuStatus ? "active" : "draft",
+      id: menu.id,
+      userId: menu.userId,
+    });
   }
   return (
     <Form {...form}>
@@ -161,20 +171,39 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="status"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Status</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
           </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <FormField
+            control={form.control}
+            name="status"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Status</FormLabel>
+                <FormControl>
+                  <div>
+                    <Input
+                      {...field}
+                      className="hidden"
+                      value={menuStatus ? "active" : "draft"}
+                    />
+                    <Switch
+                      isSelected={menuStatus}
+                      onValueChange={setMenuStatus}
+                      defaultSelected
+                      size="lg"
+                      color="success"
+                      endContent={<PrivateIcon />}
+                    >
+                      {menuStatus ? "Active" : "Draft"}
+                    </Switch>
+                  </div>
+                </FormControl>
+                <FormDescription>Set your menu status</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <Button type="submit">Submit</Button>
       </form>
