@@ -6,6 +6,7 @@ import {
   primaryKey,
   integer,
 } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const users = pgTable("user", {
   id: text("id").notNull().primaryKey(),
@@ -58,3 +59,54 @@ export const verificationTokens = pgTable(
     compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 );
+
+export const menu = pgTable("menu", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  status: text("status").notNull().default("draft"),
+  name: text("name").notNull(),
+  description: text("description"),
+  type: text("type").notNull(),
+  address: text("address").notNull(),
+  phone: text("phone"),
+  email: text("email"),
+});
+
+export const category = pgTable("category", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  icon: text("icon").notNull(),
+  position: integer("position"),
+  menuId: text("menuId")
+    .notNull()
+    .references(() => menu.id, { onDelete: "cascade" }),
+});
+
+export const item = pgTable("item", {
+  id: text("id")
+    .notNull()
+    .primaryKey()
+    .default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  description: text("description"),
+  price: integer("price").notNull(),
+  position: integer("position"),
+  categoryId: text("categoryId")
+    .notNull()
+    .references(() => category.id, { onDelete: "cascade" }),
+  menuId: text("menuId")
+    .notNull()
+    .references(() => menu.id, { onDelete: "cascade" }),
+});
+
+export type Menu = typeof menu.$inferSelect;
+export type Category = typeof category.$inferSelect;
+export type Item = typeof item.$inferSelect;
