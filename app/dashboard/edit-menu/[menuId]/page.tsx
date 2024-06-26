@@ -1,3 +1,4 @@
+import BreadcrumbsComponent from "@/components/breadcrumbs";
 import { EditMenuForm } from "./editMenuForm";
 import { title } from "@/components/primitives";
 import { getMenuById } from "@/data-access/menus";
@@ -12,6 +13,12 @@ export default async function EditMenuPage({
   if (!menu) return <div>No menu by that id</div>;
   return (
     <div>
+      <BreadcrumbsComponent
+        path={{
+          Dashboard: { location: `/dashboard` },
+          "Edit Menu": { location: `/dashboard/edit-menu` },
+        }}
+      />
       <h1 className={title({ size: "sm" })}>Edit Menu</h1>
       <div className="pt-4">
         <EditMenuForm menu={menu} />

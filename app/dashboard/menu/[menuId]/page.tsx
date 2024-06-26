@@ -6,6 +6,7 @@ import CreateCategoryButton from "./createCategoryButton";
 import { Divider } from "@nextui-org/react";
 import { calculateUserLimits } from "@/lib/utils";
 import { getCurrentUser } from "@/data-access/users";
+import BreadcrumbsComponent from "@/components/breadcrumbs";
 
 export default async function DashboardMenuPage({
   params,
@@ -30,6 +31,12 @@ export default async function DashboardMenuPage({
   );
   return (
     <div>
+      <BreadcrumbsComponent
+        path={{
+          Dashboard: { location: `/dashboard` },
+          Menu: { location: `/dashboard/menu/${menu.id}` },
+        }}
+      />
       <h1 className={title({ size: "sm" })}>{menu.name}</h1>
       <div className="grid lg:grid-cols-2 gap-4 pt-10 sm:pt-14">
         <div className=" overflow-y-hidden flex flex-col border border-default-200 dark:border-default-100 px-2 py-4 rounded-lg">

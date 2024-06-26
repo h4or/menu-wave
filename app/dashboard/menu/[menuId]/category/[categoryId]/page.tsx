@@ -6,6 +6,7 @@ import { calculateUserLimits } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
 import ItemListComponent from "./itemListComponent";
 import CreateItemButton from "./createItemButton";
+import BreadcrumbsComponent from "@/components/breadcrumbs";
 
 export default async function DashboardCategoryPage({
   params,
@@ -28,6 +29,15 @@ export default async function DashboardCategoryPage({
   const userItemLimit = calculateUserLimits("items", user?.plan as string);
   return (
     <div>
+      <BreadcrumbsComponent
+        path={{
+          Dashboard: { location: `/dashboard` },
+          Menu: { location: `/dashboard/menu/${params.menuId}` },
+          Category: {
+            location: `/dashboard/menu/${params.menuId}/category/${params.categoryId}`,
+          },
+        }}
+      />
       <h1 className={title({ size: "sm" })}>{category.name}</h1>
       <div className="grid lg:grid-cols-2 gap-4 pt-10 sm:pt-14">
         <div className=" overflow-y-hidden flex flex-col border border-default-200 dark:border-default-100 px-2 py-4 rounded-lg">

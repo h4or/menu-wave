@@ -3,8 +3,8 @@ import { title } from "@/components/primitives";
 import { getUserMenus } from "@/data-access/menus";
 import { getCurrentUser } from "@/data-access/users";
 import { calculateUserLimits } from "@/lib/utils";
-import { Divider } from "@nextui-org/react";
 import CreateMenuButton from "@/app/dashboard/createMenuButton";
+import { Divider } from "@nextui-org/react";
 
 export default async function DashboardPage() {
   const menus = await getUserMenus();
