@@ -3,7 +3,7 @@ import { getCategoryById } from "@/data-access/categories";
 import React from "react";
 import { EditCategoryForm } from "./editCategoryForm";
 
-export default async function EditMenuPage({
+export default async function EditCategoryPage({
   params,
 }: {
   params: { categoryId: string; menuId: string };

@@ -98,7 +98,7 @@ export const item = pgTable("item", {
     .default(sql`gen_random_uuid()`),
   name: text("name").notNull(),
   description: text("description"),
-  price: integer("price").notNull(),
+  price: text("price").notNull(),
   position: integer("position"),
   categoryId: text("categoryId")
     .notNull()

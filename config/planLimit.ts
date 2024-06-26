@@ -8,7 +8,7 @@ export const planLimit: any = {
     pro: 1500,
   },
   items: {
-    free: 500,
-    pro: 10000,
+    free: 45,
+    pro: 500,
   },
 };

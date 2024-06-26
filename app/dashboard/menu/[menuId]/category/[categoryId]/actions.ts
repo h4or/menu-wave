@@ -34,7 +34,7 @@ export async function createItemAction(categoryId: string) {
     {
       name: "Example",
       description: "data",
-      price: 2,
+      price: "2,99€",
       position: 0,
     },
     category.id,
