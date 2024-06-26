@@ -21,7 +21,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-import { EditIcon, DeleteIcon, EyeIcon } from "../icons";
+import { EditIcon, DeleteIcon, EyeIcon } from "../../components/icons";
 import { Menu } from "@/db/schema";
 import Link from "next/link";
 import { removeMenuAction } from "./actions";

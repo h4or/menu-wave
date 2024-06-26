@@ -1,10 +1,10 @@
-import MenuListComponent from "@/components/dashboard/menuList";
-import NewMenuButton from "@/components/dashboard/newMenuButton";
+import MenuListComponent from "@/app/dashboard/menuListComponent";
 import { title } from "@/components/primitives";
 import { getUserMenus } from "@/data-access/menus";
 import { getCurrentUser } from "@/data-access/users";
 import { calculateUserLimits } from "@/lib/utils";
 import { Divider } from "@nextui-org/react";
+import CreateMenuButton from "@/app/dashboard/createMenuButton";
 
 export default async function DashboardPage() {
   const menus = await getUserMenus();
@@ -18,7 +18,7 @@ export default async function DashboardPage() {
         <div className=" overflow-y-hidden flex flex-col border border-default-200 dark:border-default-100 px-2 py-4 rounded-lg">
           <MenuListComponent menus={menus} />
           <div className="flex flex-row items-center gap-4 pt-2">
-            <NewMenuButton />
+            <CreateMenuButton />
             <Divider orientation="vertical" />
             <p className="text-gray-400">
               You have {userMenuLimit - menus_count} menus left
