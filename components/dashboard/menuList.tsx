@@ -65,7 +65,7 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
   const renderCell = React.useCallback((menu: Menu, columnKey: ColumnKey) => {
     if (columnKey === "actions") {
       return (
-        <div className="relative flex items-center gap-2">
+        <div className="relative flex items-center gap-2 pl-8">
           <Tooltip content="Details">
             <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
               <Link href={`/dashboard/menu/${menu.id}`}>
