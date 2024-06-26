@@ -14,8 +14,9 @@ export default async function MenuPage({
   };
 }) {
   const menu = await getMenuById(params.menuId);
-  if (!menu) {
-    return <div>Menu not found</div>;
+  if (!menu || menu.status !== "active") {
+    // eslint-disable-next-line react/no-unescaped-entities
+    return <div>Menu doesn't exist or isn't active yet</div>;
   }
   const categories = await getMenuCategories(menu.id);
 
