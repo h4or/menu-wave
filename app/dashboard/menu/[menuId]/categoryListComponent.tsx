@@ -42,7 +42,7 @@ const columns: CategoryListColumnType[] = [
 
 async function removeCategory(
   categoryId: string | null,
-  menuId: string | null
+  menuId: string | null,
 ) {
   if (!menuId) return;
   if (!categoryId) return;
@@ -57,7 +57,7 @@ export default function CategoryListComponent({
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [categoryToRemove, setCategoryToRemove] = React.useState<string | null>(
-    null
+    null,
   );
   const [categoryToRemoveMenuId, setCategoryToRemoveMenuId] = React.useState<
     string | null
@@ -81,7 +81,7 @@ export default function CategoryListComponent({
                 <div
                   onClick={() =>
                     router.push(
-                      `/dashboard/menu/${category.menuId}/edit-category/${category.id}`
+                      `/dashboard/menu/${category.menuId}/edit-category/${category.id}`,
                     )
                   }
                 >
@@ -130,7 +130,7 @@ export default function CategoryListComponent({
           return cellValue;
       }
     },
-    []
+    [],
   );
 
   return (
