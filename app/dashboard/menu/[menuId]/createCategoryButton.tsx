@@ -1,15 +1,22 @@
 "use client";
 
-import { createCategory } from "@/data-access/categories";
 import { Button } from "@nextui-org/react";
-import { useRouter } from "next/navigation";
 import { createCategoryAction } from "./actions";
+import { useState } from "react";
 
 export default function CreateCategoryButton({ menuId }: { menuId: string }) {
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   return (
-    <Button size="md" onClick={async () => await createCategoryAction(menuId)}>
-      Create category
+    <Button
+      size="md"
+      isLoading={isLoading}
+      onClick={async () => {
+        setIsLoading(true);
+        await createCategoryAction(menuId);
+        setIsLoading(false);
+      }}
+    >
+      {isLoading ? "Creating..." : "Create Category"}
     </Button>
   );
 }

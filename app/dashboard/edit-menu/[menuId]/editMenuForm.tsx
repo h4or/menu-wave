@@ -43,6 +43,7 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
   const [menuStatus, setMenuStatus] = useState(
     menu.status === "active" ? true : false
   );
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,6 +58,7 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true); // Start loading
     const { phone, email, ...restValues } = values;
 
     await editMenuAction({
@@ -210,7 +212,10 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isLoading={isLoading}>
+          {" "}
+          {isLoading ? "Loading..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );

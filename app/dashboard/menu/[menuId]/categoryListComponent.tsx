@@ -42,7 +42,7 @@ const columns: CategoryListColumnType[] = [
 
 async function removeCategory(
   categoryId: string | null,
-  menuId: string | null,
+  menuId: string | null
 ) {
   if (!menuId) return;
   if (!categoryId) return;
@@ -57,11 +57,12 @@ export default function CategoryListComponent({
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [categoryToRemove, setCategoryToRemove] = React.useState<string | null>(
-    null,
+    null
   );
   const [categoryToRemoveMenuId, setCategoryToRemoveMenuId] = React.useState<
     string | null
   >(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
   const renderCell = React.useCallback(
     (category: Category, columnKey: ColumnKey) => {
       if (columnKey === "actions") {
@@ -81,7 +82,7 @@ export default function CategoryListComponent({
                 <div
                   onClick={() =>
                     router.push(
-                      `/dashboard/menu/${category.menuId}/edit-category/${category.id}`,
+                      `/dashboard/menu/${category.menuId}/edit-category/${category.id}`
                     )
                   }
                 >
@@ -130,7 +131,7 @@ export default function CategoryListComponent({
           return cellValue;
       }
     },
-    [],
+    []
   );
 
   return (
@@ -182,14 +183,25 @@ export default function CategoryListComponent({
                 <Button
                   color="danger"
                   variant="light"
+                  isLoading={isDeleting}
                   onPress={() => {
-                    removeCategory(categoryToRemove, categoryToRemoveMenuId);
-                    onClose();
+                    setIsDeleting(true);
+                    removeCategory(
+                      categoryToRemove,
+                      categoryToRemoveMenuId
+                    ).then(() => {
+                      setIsDeleting(false);
+                      onClose();
+                    });
                   }}
                 >
-                  Delete
+                  {isDeleting ? "Deleting..." : "Delete"}
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  color="primary"
+                  onPress={onClose}
+                  isDisabled={isDeleting}
+                >
                   Cancel
                 </Button>
               </ModalFooter>

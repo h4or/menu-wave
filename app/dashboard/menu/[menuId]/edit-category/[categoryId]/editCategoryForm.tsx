@@ -16,11 +16,9 @@ import {
 import { Button, Input, Switch } from "@nextui-org/react";
 import { editCategoryAction } from "./actions";
 import { Category, Menu } from "@/db/schema";
-import { PrivateIcon } from "@/components/icons";
 import Base64Image from "@/components/Base64Image";
 import { useEffect, useState } from "react";
 import { CInput } from "@/components/input";
-import { unstable_noStore } from "next/cache";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,8 +30,8 @@ const formSchema = z.object({
 });
 
 export function EditCategoryForm({ category }: { category: Category }) {
-  unstable_noStore();
   const [iconValue, setIconValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     setIconValue(category.icon);
   }, [category.icon]);
@@ -46,6 +44,7 @@ export function EditCategoryForm({ category }: { category: Category }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     await editCategoryAction({
       ...values,
       icon: iconValue,
@@ -110,7 +109,10 @@ export function EditCategoryForm({ category }: { category: Category }) {
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isLoading={isLoading}>
+          {" "}
+          {isLoading ? "Loading..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );

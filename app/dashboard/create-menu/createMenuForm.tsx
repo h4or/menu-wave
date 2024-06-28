@@ -15,6 +15,7 @@ import {
 } from "@/components/form";
 import { Button, Input } from "@nextui-org/react";
 import { createMenuAction } from "./actions";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +33,7 @@ const formSchema = z.object({
 });
 
 export function CreateMenuForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -45,6 +47,7 @@ export function CreateMenuForm() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     const updatedValues = { ...values, status: "draft" };
     await createMenuAction(updatedValues);
   }
@@ -157,7 +160,10 @@ export function CreateMenuForm() {
             />
           </div>
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isLoading={isLoading}>
+          {" "}
+          {isLoading ? "Loading..." : "Create"}
+        </Button>
       </form>
     </Form>
   );

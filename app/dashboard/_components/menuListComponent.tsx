@@ -21,10 +21,10 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-import { EditIcon, DeleteIcon, EyeIcon } from "../../components/icons";
+import { EditIcon, DeleteIcon, EyeIcon } from "@/components/icons";
 import { Menu } from "@/db/schema";
 import Link from "next/link";
-import { removeMenuAction } from "./actions";
+import { removeMenuAction } from "../actions";
 import { useRouter } from "next/navigation";
 
 type MenuListColumnType = {
@@ -62,6 +62,7 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [menuToRemove, setMenuToRemove] = React.useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = React.useState(false);
   const renderCell = React.useCallback((menu: Menu, columnKey: ColumnKey) => {
     if (columnKey === "actions") {
       return (
@@ -170,14 +171,22 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
                 <Button
                   color="danger"
                   variant="light"
+                  isLoading={isDeleting}
                   onPress={() => {
-                    removeMenu(menuToRemove);
-                    onClose();
+                    setIsDeleting(true);
+                    removeMenu(menuToRemove).then(() => {
+                      setIsDeleting(false);
+                      onClose();
+                    });
                   }}
                 >
-                  Delete
+                  {isDeleting ? "Deleting..." : "Delete"}
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  color="primary"
+                  onPress={onClose}
+                  isDisabled={isDeleting}
+                >
                   Cancel
                 </Button>
               </ModalFooter>
