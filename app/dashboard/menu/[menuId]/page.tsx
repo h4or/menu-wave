@@ -18,6 +18,7 @@ export default async function DashboardMenuPage({
         }}
       />
       <Suspense fallback={<div>Loading...</div>}>
+        {/* @ts-ignore */}
         <CategoryList menuId={params.menuId} />
       </Suspense>
     </div>

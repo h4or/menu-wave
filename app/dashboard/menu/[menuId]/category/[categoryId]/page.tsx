@@ -30,6 +30,7 @@ export default async function DashboardCategoryPage({
         }}
       />
       <Suspense fallback={<div>Loading...</div>}>
+        {/* @ts-ignore */}
         <ItemList categoryId={params.categoryId} />
       </Suspense>
     </div>

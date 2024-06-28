@@ -21,8 +21,8 @@ export async function createCategoryAction(menuId: string) {
 
   await createCategory(
     {
-      name: "Example",
-      icon: "data",
+      name: "Coffies",
+      icon: "img",
       position: 0,
     },
     menu.id

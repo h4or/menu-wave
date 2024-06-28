@@ -30,10 +30,10 @@ export async function createItemAction(categoryId: string) {
     throw new Error("User not authorized");
   }
 
-  await createItem(
+  const item = await createItem(
     {
-      name: "Example",
-      description: "data",
+      name: "Tea",
+      description: "0,25l",
       price: "2,99€",
       position: 0,
     },
@@ -41,7 +41,9 @@ export async function createItemAction(categoryId: string) {
     menu.id
   );
   revalidatePath(`/dashboard/menu/${menu.id}/category/${category.id}`);
-  redirect(`/dashboard/menu/${menu.id}/category/${category.id}`);
+  redirect(
+    `/dashboard/menu/${menu.id}/category/${category.id}/edit-item/${item.id}`
+  );
 }
 
 export async function removeItemAction(
