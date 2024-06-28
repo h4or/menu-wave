@@ -24,7 +24,7 @@ import {
 import { EditIcon, DeleteIcon, EyeIcon } from "@/components/icons";
 import { Menu } from "@/db/schema";
 import Link from "next/link";
-import { removeMenuAction } from "../actions";
+import { removeMenuAction } from "./actions";
 import { useRouter } from "next/navigation";
 
 type MenuListColumnType = {

@@ -2,7 +2,7 @@ import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-
+import NextTopLoader from "nextjs-toploader";
 import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
@@ -43,6 +43,7 @@ export default function RootLayout({
       >
         <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
           <div className="relative flex flex-col h-screen">
+            <NextTopLoader />
             <Navbar />
             <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
               {children}

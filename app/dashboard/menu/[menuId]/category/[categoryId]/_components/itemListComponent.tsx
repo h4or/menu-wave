@@ -53,6 +53,7 @@ async function removeItem(
 }
 
 export default function ItemListComponent({ items }: { items: Item[] }) {
+  const [isDeleting, setIsDeleting] = React.useState(false);
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [itemToRemove, setItemToRemove] = React.useState<string | null>(null);
@@ -170,18 +171,26 @@ export default function ItemListComponent({ items }: { items: Item[] }) {
                 <Button
                   color="danger"
                   variant="light"
+                  isLoading={isDeleting}
                   onPress={() => {
+                    setIsDeleting(true);
                     removeItem(
                       itemToRemove,
                       itemToRemoveCategoryId,
                       itemToRemoveMenuId
-                    );
-                    onClose();
+                    ).then(() => {
+                      setIsDeleting(false);
+                      onClose();
+                    });
                   }}
                 >
-                  Delete
+                  {isDeleting ? "Deleting..." : "Delete"}
                 </Button>
-                <Button color="primary" onPress={onClose}>
+                <Button
+                  color="primary"
+                  onPress={onClose}
+                  isDisabled={isDeleting}
+                >
                   Cancel
                 </Button>
               </ModalFooter>

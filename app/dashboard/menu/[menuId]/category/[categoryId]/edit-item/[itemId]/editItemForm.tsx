@@ -16,7 +16,7 @@ import {
 import { Button, Input, Switch } from "@nextui-org/react";
 import { editItemAction } from "./actions";
 import { Category, Item, Menu } from "@/db/schema";
-import { unstable_noStore } from "next/cache";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -29,7 +29,7 @@ const formSchema = z.object({
 });
 
 export function EditItemForm({ item }: { item: Item }) {
-  unstable_noStore();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,6 +40,7 @@ export function EditItemForm({ item }: { item: Item }) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     await editItemAction({
       ...values,
       id: item.id,
@@ -98,7 +99,9 @@ export function EditItemForm({ item }: { item: Item }) {
             )}
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isLoading={isLoading}>
+          {isLoading ? "Saving..." : "Submit"}
+        </Button>
       </form>
     </Form>
   );
