@@ -16,6 +16,7 @@ import {
 import { Button, Input } from "@nextui-org/react";
 import { createMenuAction } from "./actions";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -50,6 +51,7 @@ export function CreateMenuForm() {
     setIsLoading(true);
     const updatedValues = { ...values, status: "draft" };
     await createMenuAction(updatedValues);
+    toast.success("Menu created successfully");
   }
   return (
     <Form {...form}>

@@ -17,6 +17,7 @@ import { Button, Input, Switch } from "@nextui-org/react";
 import { editItemAction } from "./actions";
 import { Category, Item, Menu } from "@/db/schema";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -48,6 +49,7 @@ export function EditItemForm({ item }: { item: Item }) {
       categoryId: item.categoryId,
       menuId: item.menuId,
     });
+    toast.success("Item updated successfully");
   }
 
   return (

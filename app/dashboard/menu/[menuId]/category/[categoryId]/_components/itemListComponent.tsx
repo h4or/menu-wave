@@ -27,6 +27,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Base64Image from "@/components/Base64Image";
 import { removeItemAction } from "./actions";
+import toast from "react-hot-toast";
 
 type ItemListColumnType = {
   name: string;
@@ -181,6 +182,7 @@ export default function ItemListComponent({ items }: { items: Item[] }) {
                     ).then(() => {
                       setIsDeleting(false);
                       onClose();
+                      toast.success("Item deleted successfully");
                     });
                   }}
                 >

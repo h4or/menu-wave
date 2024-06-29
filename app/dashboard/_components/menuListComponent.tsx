@@ -26,6 +26,7 @@ import { Menu } from "@/db/schema";
 import Link from "next/link";
 import { removeMenuAction } from "./actions";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type MenuListColumnType = {
   name: string;
@@ -177,6 +178,7 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
                     removeMenu(menuToRemove).then(() => {
                       setIsDeleting(false);
                       onClose();
+                      toast.success("Menu deleted successfully");
                     });
                   }}
                 >

@@ -5,6 +5,7 @@ import { Button, Divider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { createItemAction } from "./actions";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function CreateItemButton({
   userItemLimit,
@@ -25,6 +26,7 @@ export default function CreateItemButton({
           setIsLoading(true);
           await createItemAction(categoryId);
           setIsLoading(false);
+          toast.success("Item created successfully");
         }}
       >
         {isLoading ? "Creating..." : "Create Item"}

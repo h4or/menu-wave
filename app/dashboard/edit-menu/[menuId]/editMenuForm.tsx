@@ -18,6 +18,7 @@ import { editMenuAction } from "./actions";
 import { Menu } from "@/db/schema";
 import { useState } from "react";
 import { PrivateIcon } from "@/components/icons";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -69,6 +70,7 @@ export function EditMenuForm({ menu }: { menu: Menu }) {
       id: menu.id,
       userId: menu.userId,
     });
+    toast.success("Menu updated successfully.");
   }
 
   return (

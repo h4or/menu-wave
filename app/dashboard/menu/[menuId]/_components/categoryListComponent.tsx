@@ -27,6 +27,7 @@ import Link from "next/link";
 import { removeCategoryAction } from "./actions";
 import { useRouter } from "next/navigation";
 import Base64Image from "@/components/Base64Image";
+import toast from "react-hot-toast";
 
 type CategoryListColumnType = {
   name: string;
@@ -192,6 +193,7 @@ export default function CategoryListComponent({
                     ).then(() => {
                       setIsDeleting(false);
                       onClose();
+                      toast.success("Category deleted successfully");
                     });
                   }}
                 >

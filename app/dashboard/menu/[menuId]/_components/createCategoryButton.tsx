@@ -3,6 +3,7 @@
 import { Button, Divider } from "@nextui-org/react";
 import { createCategoryAction } from "./actions";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function CreateCategoryButton({
   menuId,
@@ -23,6 +24,7 @@ export default function CreateCategoryButton({
           setIsLoading(true);
           await createCategoryAction(menuId);
           setIsLoading(false);
+          toast.success("Category created successfully");
         }}
       >
         {isLoading ? "Creating..." : "Create Category"}

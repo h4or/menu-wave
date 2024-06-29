@@ -19,6 +19,7 @@ import { Category, Menu } from "@/db/schema";
 import Base64Image from "@/components/Base64Image";
 import { useEffect, useState } from "react";
 import { CInput } from "@/components/input";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -52,6 +53,7 @@ export function EditCategoryForm({ category }: { category: Category }) {
       menuId: category.menuId,
       position: category.position,
     });
+    toast.success("Category updated successfully");
   }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
