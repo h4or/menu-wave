@@ -175,11 +175,19 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
                   isLoading={isDeleting}
                   onPress={() => {
                     setIsDeleting(true);
-                    removeMenu(menuToRemove).then(() => {
-                      setIsDeleting(false);
-                      onClose();
-                      toast.success("Menu deleted successfully");
-                    });
+                    removeMenu(menuToRemove)
+                      .then(() => {
+                        setIsDeleting(false);
+                        onClose();
+                        toast.success("Menu deleted successfully");
+                      })
+                      .catch(() => {
+                        setIsDeleting(false);
+                        onClose();
+                        toast(
+                          "An error occurred while deleting the menu. Please try again."
+                        );
+                      });
                   }}
                 >
                   {isDeleting ? "Deleting..." : "Delete"}
