@@ -21,7 +21,7 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 
-import { EditIcon, DeleteIcon, EyeIcon } from "@/components/icons";
+import { EditIcon, DeleteIcon, EyeIcon, WebIcon } from "@/components/icons";
 import { Menu } from "@/db/schema";
 import Link from "next/link";
 import { removeMenuAction } from "./actions";
@@ -96,6 +96,15 @@ export default function MenuListComponent({ menus }: { menus: Menu[] }) {
               </div>
             </span>
           </Tooltip>
+          {menu.status === "active" && (
+            <Tooltip content="Details">
+              <span className="text-sm cursor-pointer active:opacity-50">
+                <Link href={`/menu/${menu.id}`}>
+                  <WebIcon />
+                </Link>
+              </span>
+            </Tooltip>
+          )}
         </div>
       );
     }
