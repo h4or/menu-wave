@@ -29,6 +29,6 @@ export const siteConfig = {
     },
   ],
   links: {
-    github: "https://github.com/h4or/menu-wave",
+    github: "https://github.com/h4or",
   },
 };

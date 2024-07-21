@@ -17,6 +17,7 @@ import { Button, Input } from "@nextui-org/react";
 import { createMenuAction } from "./actions";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -35,6 +36,7 @@ const formSchema = z.object({
 
 export function CreateMenuForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,8 +52,14 @@ export function CreateMenuForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const updatedValues = { ...values, status: "draft" };
-    await createMenuAction(updatedValues);
-    toast.success("Menu created successfully");
+    await createMenuAction(updatedValues)
+      .then(() => {
+        toast.success("Menu created successfully");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+        router.push("/dashboard");
+      });
   }
   return (
     <Form {...form}>

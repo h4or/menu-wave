@@ -3,7 +3,7 @@ import { CreateMenuForm } from "./createMenuForm";
 import { title } from "@/components/primitives";
 import React from "react";
 
-export default function CreateMenuPage() {
+export default function CreateMenuPage(userMenuCount: number) {
   return (
     <div>
       <BreadcrumbsComponent

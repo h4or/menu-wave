@@ -11,7 +11,7 @@ export default async function DashboardPage() {
         <div className="overflow-y-hidden flex flex-col border border-default-200 dark:border-default-100 px-2 py-4 rounded-lg">
           <Suspense fallback={<SkeletonMenuList />}>
             {/* @ts-ignore */}
-            <MenuList />
+            <MenuList  />
           </Suspense>
         </div>
       </div>
