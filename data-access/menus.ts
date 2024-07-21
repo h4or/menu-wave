@@ -23,7 +23,7 @@ export async function getUserMenus() {
 
 export async function createMenu(
   menuData: Omit<Menu, "id" | "userId">,
-  userId: string,
+  userId: string
 ) {
   const inserted = await db
     .insert(menu)
@@ -36,8 +36,8 @@ export async function createMenu(
 export async function editMenu(menuData: Menu) {
   const updated = await db
     .update(menu)
-    .where(eq(menu.id, menuData.id))
     .set(menuData)
+    .where(eq(menu.id, menuData.id))
     .returning();
 
   return updated[0];
